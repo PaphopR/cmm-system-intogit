@@ -1,10 +1,8 @@
 from dotenv import load_dotenv
 load_dotenv(dotenv_path=".env", override=True)
-import os
 
 import streamlit as st
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_openai import ChatOpenAI
 
 from langgraph_supervisor import create_supervisor
 from langgraph.prebuilt import create_react_agent
@@ -16,8 +14,6 @@ from tools1 import objectdetection, datacollection
 memory = InMemorySaver()
 
 llm = ChatGoogleGenerativeAI(model="gemini-2.5-pro",temperature=0)
-#llm = ChatOpenAI(model="gpt-4.1", temperature=0)
-#llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash-exp",temperature=0)
 
 steel_detect_count_agent = create_react_agent(
     model=llm,
@@ -206,11 +202,6 @@ if page == "Chat":
         
         st.session_state.messages.append(AIMessage(content=ai_content))
 
-        #try:
-        #    os.remove(image_path)
-        #    st.warning(f"completed: Temporary file {image_path} deleted successfully.")
-        #except Exception as e:
-        #    st.empty()
 
 elif page == "Data Visualization":
     from st_visiualization import load_data, show_charts
